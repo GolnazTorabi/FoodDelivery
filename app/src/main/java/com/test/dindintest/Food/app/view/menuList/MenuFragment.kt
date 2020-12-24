@@ -148,7 +148,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             }
         })
     }
-
     companion object {
         const val CORNER_SHRINK_RANGE = 0.15f
     }
