@@ -12,8 +12,10 @@ import com.test.dindintest.R
 import com.test.dindintest.databinding.FragmentDrinkBinding
 import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     private val viewModel: DrinkViewModel by fragmentViewModel()
     private val sharedViewModel: SharedViewModel by activityViewModels()

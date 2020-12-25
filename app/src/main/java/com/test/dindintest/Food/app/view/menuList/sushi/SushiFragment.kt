@@ -12,8 +12,10 @@ import com.test.dindintest.databinding.FragmentSushiBinding
 import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
 import com.test.dindintest.Food.app.view.sharedViewModel.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
+@AndroidEntryPoint
 class SushiFragment : BaseFragment(R.layout.fragment_sushi) {
     private val viewModel: SushiViewModel by fragmentViewModel()
     private val sharedViewModel : SharedViewModel by activityViewModels()

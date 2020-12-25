@@ -22,6 +22,7 @@ import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 
+
 @AndroidEntryPoint
 class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
