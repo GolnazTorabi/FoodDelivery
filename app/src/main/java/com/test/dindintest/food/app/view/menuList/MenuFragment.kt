@@ -10,18 +10,23 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.mvrx.withState
 import com.google.android.material.appbar.AppBarLayout
+import com.test.dindintest.R
+import com.test.dindintest.databinding.FragmentMenuBinding
 import com.test.dindintest.food.app.view.menuList.adapter.MenuListPagerAdapter
 import com.test.dindintest.food.app.view.menuList.adapter.ToolbarAdapter
 import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
-import com.test.dindintest.R
-import com.test.dindintest.databinding.FragmentMenuBinding
 import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import com.airbnb.mvrx.fragmentViewModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
@@ -30,8 +35,11 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     private val binding: FragmentMenuBinding by viewBinding()
     private val viewModel: MenuViewModel by fragmentViewModel()
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private var compositeDisposable: CompositeDisposable? = CompositeDisposable()
 
-    var order = 0
+
+    private var order: Int? = 0
+    private var positionOfSlider: Int? = 0
 
 
     private lateinit var toolbarAdapter: ToolbarAdapter
@@ -58,19 +66,19 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     private fun checkOrders() {
         sharedViewModel.foodPizza.observe(viewLifecycleOwner, Observer {
             if (!it.isNullOrEmpty()) {
-                order += it.size
+                order = order?.plus(it.size)
                 checkOrder()
             }
         })
         sharedViewModel.foodSushi.observe(viewLifecycleOwner, Observer {
             if (!it.isNullOrEmpty()) {
-                order += it.size
+                order = order?.plus(it.size)
                 checkOrder()
             }
         })
         sharedViewModel.foodDrink.observe(viewLifecycleOwner, Observer {
             if (!it.isNullOrEmpty()) {
-                order += it.size
+                order = order?.plus(it.size)
                 checkOrder()
             }
         })
@@ -78,7 +86,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     }
 
     private fun checkOrder() {
-        if (order > 0) {
+        if (order ?: 0 > 0) {
             binding.count.visibility = View.VISIBLE
             binding.count.text = order.toString()
         } else {
@@ -104,6 +112,58 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         binding.list.adapter = toolbarAdapter
         snapHelper.attachToRecyclerView(binding.list)
         initPageIndicator()
+        setToolbarScrollListener()
+    }
+
+    private fun setToolbarScrollListener() {
+        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    try {
+                        val centerView = snapHelper.findSnapView(layoutManager)
+                        if (centerView != null) {
+                            positionOfSlider = layoutManager.getPosition(centerView)
+                            binding.pageIndicatorView.selection =
+                                layoutManager.getPosition(centerView)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+            }
+
+        })
+        scrollItemsAutomatically()
+    }
+
+    private fun scrollItemsAutomatically() {
+        val counterDisposable = Observable.interval(5, 5, TimeUnit.SECONDS)
+            .map {
+                it
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                try {
+
+                    positionOfSlider =
+                        if (positionOfSlider == ((binding.list.adapter?.itemCount)!! - 1)) {
+                            0
+                        } else {
+                            layoutManager.findFirstVisibleItemPosition() + 1
+                        }
+
+                    binding.list.smoothScrollToPosition(positionOfSlider!!)
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }, {
+                it.printStackTrace()
+            })
+
+        compositeDisposable?.add(counterDisposable)
     }
 
     private fun initPageIndicator() {
