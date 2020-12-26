@@ -100,7 +100,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle_version}"
 
     //navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
 
     // data binding -viewModel
@@ -122,7 +122,7 @@ dependencies {
 
 
     //Exposy
-    implementation "com.airbnb.android:epoxy:4.3.1"
+    implementation "com.airbnb.android:epoxy:4.1.0"
 
 
 }
