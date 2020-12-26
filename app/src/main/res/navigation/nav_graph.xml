@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/baseFragment"
-        android:name="com.test.dindintest.Food.app.view.menuList.MenuFragment"
+        android:name="com.test.dindintest.food.app.view.menuList.MenuFragment"
         android:label="fragment_base"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.test.dindintest.Food.app.view.shopList.ShopFragment"
+        android:name="com.test.dindintest.food.app.view.shopList.ShopFragment"
         android:label="shop_fragment"
         tools:layout="@layout/fragment_shop" />
 </navigation>

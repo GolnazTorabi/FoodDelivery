@@ -1,7 +1,7 @@
 package com.test.dindintest.util.repositoryModule
 
-import com.test.dindintest.Food.data.repository.FoodRepositoryImpl
-import com.test.dindintest.Food.domain.repository.FoodRepository
+import com.test.dindintest.food.data.repository.FoodRepositoryImpl
+import com.test.dindintest.food.domain.repository.FoodRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

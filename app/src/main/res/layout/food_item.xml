@@ -5,7 +5,7 @@
 
         <variable
             name="food"
-            type="com.test.dindintest.Food.data.response.FoodResponse" />
+            type="com.test.dindintest.food.data.response.FoodResponse" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
