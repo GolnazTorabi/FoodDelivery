@@ -41,6 +41,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     private var order: Int? = 0
     private var positionOfSlider: Int? = 0
 
+    companion object {
+        const val CORNER_SHRINK_RANGE = 0.15f
+    }
 
     private lateinit var toolbarAdapter: ToolbarAdapter
     val snapHelper by lazy {
@@ -215,7 +218,4 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         })
     }
 
-    companion object {
-        const val CORNER_SHRINK_RANGE = 0.15f
-    }
 }

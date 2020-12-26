@@ -41,12 +41,13 @@ class SushiFragment : BaseFragment(R.layout.fragment_sushi) {
         snapHelper.attachToRecyclerView(binding.sushiList)
         subscribeAdd = foodAdapter.clickEventAdd
             .subscribe {
-                for (i in 0 until sharedViewModel.foodSushi.value?.size!!) {
+                loop@ for (i in 0 until sharedViewModel.foodSushi.value?.size!!) {
                     if (it.first.name == sharedViewModel.foodSushi.value!![i].name) {
                         sharedViewModel.foodSushi.value!![i].count++
-                        break
+                        break@loop
                     } else if (it.first.name != sharedViewModel.foodSushi.value!![i].name && i == sharedViewModel.foodSushi.value?.size!! - 1) {
                         sharedViewModel.sendMessageSushi(mutableListOf(it.first))
+                        break@loop
                     }
                 }
             }

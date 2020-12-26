@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.mvrx.withState
-import com.test.dindintest.food.app.view.menuList.adapter.FoodAdapter
-import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
 import com.test.dindintest.R
 import com.test.dindintest.databinding.FragmentPizzaBinding
+import com.test.dindintest.food.app.view.menuList.adapter.FoodAdapter
+import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
 import com.test.dindintest.util.BaseFragment
-import com.test.dindintest.util.MvRxViewModel
 import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
@@ -43,13 +42,13 @@ class PizzaFragment : BaseFragment(R.layout.fragment_pizza) {
         snapHelper.attachToRecyclerView(binding.pizzaList)
         subscribeAdd = foodAdapter.clickEventAdd
             .subscribe {
-                for (i in 0 until sharedViewModel.foodPizza.value?.size!!) {
+                loop@ for (i in 0 until sharedViewModel.foodPizza.value?.size!!) {
                     if (it.first.name == sharedViewModel.foodPizza.value!![i].name) {
                         sharedViewModel.foodPizza.value!![i].count++
-                        break
+                        break@loop
                     } else if (it.first.name != sharedViewModel.foodPizza.value!![i].name && i == sharedViewModel.foodPizza.value?.size!! - 1) {
                         sharedViewModel.sendMessagePizza(mutableListOf(it.first))
-
+                        break@loop
                     }
                 }
             }

@@ -42,12 +42,13 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         snapHelper.attachToRecyclerView(binding.drinkList)
         subscribeAdd = foodAdapter.clickEventAdd
             .subscribe {
-                for (i in 0 until sharedViewModel.foodDrink.value?.size!!) {
+                 loop@for (i in 0 until sharedViewModel.foodDrink.value?.size!!) {
                     if (it.first.name == sharedViewModel.foodDrink.value!![i].name) {
                         sharedViewModel.foodDrink.value!![i].count++
-                        break
+                        break@loop
                     } else if (it.first.name != sharedViewModel.foodDrink.value!![i].name && i == sharedViewModel.foodDrink.value?.size!! - 1) {
                         sharedViewModel.sendMessageDrink(mutableListOf(it.first))
+                        break@loop
                     }
                 }
             }

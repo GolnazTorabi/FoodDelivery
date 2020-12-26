@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.test.dindintest.food.data.response.FoodResponse
 import com.test.dindintest.R
 import com.test.dindintest.databinding.ItemFooterShopBinding
 import com.test.dindintest.databinding.ItemShopBinding
+import com.test.dindintest.food.data.response.FoodResponse
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -66,12 +66,16 @@ class CartAdapter :
         this.items = items
         notifyDataSetChanged()
     }
+
     val clickEventDelete: Observable<Pair<FoodResponse, Int>> = clickSubjectDelete
 
     inner class ViewHolder(var binding: ItemShopBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setData(data: FoodResponse) {
             binding.food = data
             binding.delete.setOnClickListener {
+                items.removeAt(layoutPosition)
+                notifyItemRemoved(layoutPosition)
+                notifyItemRangeChanged(layoutPosition, itemCount)
                 clickSubjectDelete.onNext(Pair(data, layoutPosition))
             }
         }

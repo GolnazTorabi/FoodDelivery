@@ -49,6 +49,7 @@ class FoodAdapter(val activity: Activity) : RecyclerView.Adapter<FoodAdapter.Foo
     }
 
     fun fillData(items: MutableList<FoodResponse>) {
+        this.items.clear()
         this.items = items
         notifyDataSetChanged()
     }
