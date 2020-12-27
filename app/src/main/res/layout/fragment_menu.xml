@@ -106,10 +106,7 @@
                         android:id="@+id/tab_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/colorSecondary"
-                        app:tabIndicator="@color/white"
-                        app:tabMode="scrollable"
-                        app:tabTextAppearance="@style/Custom">
+                        >
 
                         <com.google.android.material.tabs.TabItem
                             android:id="@+id/pizza_tab"
@@ -135,7 +132,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
-
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

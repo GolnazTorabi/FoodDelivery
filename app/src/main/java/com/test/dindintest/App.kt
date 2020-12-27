@@ -1,6 +1,7 @@
 package com.test.dindintest
 
 import android.app.Application
+import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.Mavericks.initialize
 import com.airbnb.mvrx.MavericksView
 import com.test.dindintest.food.data.api.FakeApi
@@ -14,6 +15,7 @@ import org.koin.dsl.module
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        initialize(applicationContext)
         startKoin {
             androidContext(this@App)
             modules(repository)

@@ -15,7 +15,7 @@ import org.koin.android.ext.android.inject
 
 
 data class MenuDiscountState(
-    var discountList: List<MenuDiscountResponse> = emptyList()
+    val discountList: List<MenuDiscountResponse> = emptyList()
 ) : MavericksState
 
 class MenuViewModel(initialState: MenuDiscountState, private val repository: FoodRepository) :

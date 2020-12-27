@@ -18,7 +18,7 @@ import com.test.dindintest.util.ext.addTo
 import org.koin.android.ext.android.inject
 
 data class FoodState(
-    var foodList: List<FoodResponse> = emptyList()
+    val foodList: List<FoodResponse> = emptyList()
 ) : MavericksState
 
 class PizzaViewModel (initialState: FoodState, private val repository: FoodRepository) :

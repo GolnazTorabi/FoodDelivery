@@ -1,10 +1,11 @@
 package com.test.dindintest.food.app.view.menuList.pizza
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.airbnb.epoxy.EpoxyController
+import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -14,10 +15,9 @@ import com.test.dindintest.food.app.view.menuList.adapter.FoodAdapter
 import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
 import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
-class PizzaFragment : BaseFragment(R.layout.fragment_pizza) , MavericksView {
+class PizzaFragment : BaseFragment(R.layout.fragment_pizza), MavericksView {
     private val viewModel: PizzaViewModel by fragmentViewModel()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val binding: FragmentPizzaBinding by viewBinding()
@@ -32,7 +32,13 @@ class PizzaFragment : BaseFragment(R.layout.fragment_pizza) , MavericksView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Mavericks.initialize(requireContext())
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        binding.lifecycleOwner = this
     }
 
     private fun initAdapter() {
