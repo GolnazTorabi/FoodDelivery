@@ -5,6 +5,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.airbnb.epoxy.EpoxyController
+import com.airbnb.mvrx.MavericksView
+import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.test.dindintest.R
 import com.test.dindintest.databinding.FragmentPizzaBinding
@@ -15,8 +17,7 @@ import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
-@AndroidEntryPoint
-class PizzaFragment : BaseFragment(R.layout.fragment_pizza) {
+class PizzaFragment : BaseFragment(R.layout.fragment_pizza) , MavericksView {
     private val viewModel: PizzaViewModel by fragmentViewModel()
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val binding: FragmentPizzaBinding by viewBinding()
@@ -54,7 +55,8 @@ class PizzaFragment : BaseFragment(R.layout.fragment_pizza) {
             }
     }
 
-    private fun EpoxyController.buildModels() = withState(viewModel) { state ->
+
+    override fun invalidate() = withState(viewModel) { state ->
         foodAdapter.fillData(state.foodList.toMutableList())
     }
 }

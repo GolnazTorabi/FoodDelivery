@@ -9,7 +9,6 @@ import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class ShopFragment : BaseFragment(R.layout.fragment_shop) {
 
     private val binding: FragmentShopBinding by viewBinding()

@@ -4,21 +4,21 @@ import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.airbnb.epoxy.EpoxyController
+import com.airbnb.mvrx.MavericksView
+import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import com.test.dindintest.food.app.view.menuList.adapter.FoodAdapter
 import com.test.dindintest.R
 import com.test.dindintest.databinding.FragmentSushiBinding
+import com.test.dindintest.food.app.view.menuList.adapter.FoodAdapter
+import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
 import com.test.dindintest.util.BaseFragment
 import com.test.dindintest.util.binding.viewBinding
-import com.test.dindintest.food.app.view.sharedViewModel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
-@AndroidEntryPoint
-class SushiFragment : BaseFragment(R.layout.fragment_sushi) {
+class SushiFragment : BaseFragment(R.layout.fragment_sushi), MavericksView {
     private val viewModel: SushiViewModel by fragmentViewModel()
-    private val sharedViewModel : SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val binding: FragmentSushiBinding by viewBinding()
     private lateinit var foodAdapter: FoodAdapter
@@ -53,7 +53,8 @@ class SushiFragment : BaseFragment(R.layout.fragment_sushi) {
             }
     }
 
-    private fun EpoxyController.buildModels() = withState(viewModel) { state ->
+
+    override fun invalidate() = withState(viewModel) { state ->
         foodAdapter.fillData(state.foodList.toMutableList())
     }
 }

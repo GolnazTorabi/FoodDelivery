@@ -11,7 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.epoxy.EpoxyController
+import com.airbnb.mvrx.MavericksView
+import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.google.android.material.appbar.AppBarLayout
 import com.test.dindintest.R
@@ -29,8 +30,7 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 
-@AndroidEntryPoint
-class MenuFragment : BaseFragment(R.layout.fragment_menu) {
+class MenuFragment : BaseFragment(R.layout.fragment_menu), MavericksView {
 
     private val binding: FragmentMenuBinding by viewBinding()
     private val viewModel: MenuViewModel by fragmentViewModel()
@@ -102,11 +102,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         binding.tabLayout.setupWithViewPager(binding.pager)
         val menuListPagerAdapter = MenuListPagerAdapter(parentFragmentManager)
         binding.pager.adapter = menuListPagerAdapter
-    }
-
-    private fun EpoxyController.buildModels() = withState(viewModel) { state ->
-        toolbarAdapter.fillData(state.discountList.toMutableList())
-
     }
 
     private fun initAdapter() {
@@ -216,6 +211,10 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 }
             }
         })
+    }
+
+    override fun invalidate() = withState(viewModel) { state ->
+        toolbarAdapter.fillData(state.discountList.toMutableList())
     }
 
 }

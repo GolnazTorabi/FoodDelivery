@@ -15,7 +15,7 @@ import com.test.dindintest.util.binding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.Disposable
 
-@AndroidEntryPoint
+
 class CartFragment : BaseFragment(R.layout.fragment_cart) {
     private val binding: FragmentCartBinding by viewBinding()
     private val sharedViewModel: SharedViewModel by activityViewModels()

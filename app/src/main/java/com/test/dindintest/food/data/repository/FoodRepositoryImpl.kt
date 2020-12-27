@@ -7,7 +7,7 @@ import com.test.dindintest.food.domain.repository.FoodRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class FoodRepositoryImpl @Inject constructor(private val fakeApi: FakeApi) : FoodRepository {
+class FoodRepositoryImpl(private val fakeApi: FakeApi) : FoodRepository {
     override fun getPizzas(): Single<List<FoodResponse>> {
         return fakeApi.getPizzasList()
     }
